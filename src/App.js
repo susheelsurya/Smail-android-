@@ -1,7 +1,14 @@
-import React from 'react' ;
+import { useEffect } from 'react';
+import { setupNotifications } from './firebaseNotifications';
+
 import AllPages from "./AllComponents/AllPages.js" ;
 
 const App = () => {
+
+  useEffect(() => {
+  setupNotifications();
+}, []);
+
   
   return (
     <>
