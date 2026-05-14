@@ -1,0 +1,2211 @@
+//var(--Main-Background) : #0B0B0F ;
+//var(--Primary-Accent): purple  ; // 🔥 glass color ;
+//--Text-Primary: white ;
+:root {
+--input-bg: #F1F3F4 ; // #2C2C2C ;
+
+
+--Main-Background: #FFFFFF ; // #0B0D0F ; //Gmail dark mode kante konchem deeper black for premium feel.
+--Surface-Active: #F1F3F4 ; // #171A1D ; //Selected email cards leda active tab backgrounds.
+--Primary-Accent: #0066FF ; // #0066FF ; // "Smail" logo, Compose button, mariyu Unread indicators.
+--Text-Primary:  #202124 ; // #E8EAED ; // Email subjects mariyu body text (Crisp readability).
+--Text-Secondary: #5F6368 ; // #9AA0A6  ;// Sender names mariyu timestamps (Muted look).
+}
+
+
+* {
+  padding: 0;
+  margin: 0;
+  text-transform: capitalize;
+  user-select: none;
+  outline: none;
+  color: var(--Text-Primary);
+  z-index: 2 ;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--Main-Background)  ;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Global styles lo add chey */
+body, div, h1, h2, h3, p, span, section, nav {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+  
+.page-transition {
+    animation: slideUpFade 0.4s ease-out;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.neo-alert {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(10rem);
+    background: var(--input-bg); /* Nee existing theme variable */
+    color: var(--text-color);
+    padding: 1.6rem  2.4rem ;
+    border-radius: 1.4rem ;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 28.4rem ;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
+    border: .1rem solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+}
+
+.neo-alert.active {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.neo-content {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem ;
+}
+
+.neo-icon {
+    color: var(--Primary-Accent) ; /* Subtle accent color */
+    font-size: 1.6rem;
+}
+
+.neo-alert p {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 500 ;
+    letter-spacing: 0.2rem;
+}
+
+.neo-close {
+    background: none;
+    border: none;
+    color: var(--Text-Primary) ;
+    opacity: 0.5;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-left: 1.6rem ;
+}
+
+.neo-close:hover {
+    opacity: 1;
+}
+
+.neo-confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4); /* Subtle blur background */
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.neo-confirm-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.neo-confirm-box {
+    background: var(--input-bg);
+    color: var(--text-color);
+    padding: 1.5rem;
+    border-radius: 1.2rem;
+    width: 85%;
+    max-width: 320px;
+    text-align: center;
+    transform: scale(0.8);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.neo-confirm-overlay.active .neo-confirm-box {
+    transform: scale(1);
+}
+
+.neo-confirm-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 1.5rem;
+}
+
+.neo-cancel-btn, .neo-action-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.neo-cancel-btn {
+    background: rgba(128, 128, 128, 0.1);
+    color: var(--text-color);
+}
+
+.neo-action-btn {
+    background: #ff4757; /* Red for delete/confirm actions */
+    color: white;
+}
+
+
+
+
+
+.App {
+  background-color: var(--Main-Background)  ; 
+  
+  color: var(--Text-Primary);
+  display: flex ;
+  flex-direction: column ;
+  min-height: 100vh ;
+  justify-content: center ;
+  align-items: center ; 
+  
+}
+
+html {
+  font-size: 10px ;
+}
+
+h1 {
+  color: var(--Text-Primary);
+}
+
+p {
+  font-size: 1.2rem ;
+}
+
+.UIAHeader {
+  position: fixed ;
+  top: 0 ;
+  left: 0 ;
+  display: flex ;
+  justify-content: space-between ;
+  align-items: center ; 
+  height: 8rem ;
+  width: 100vw ;
+  background: var(--Main-Background)  ;
+  z-index: 99 ;
+}
+
+.hedding {
+  height: 5rem ;
+  width: 4rem ;
+  
+}
+
+
+.UIAContent {
+  flex: 1 ;
+  //border: .2rem solid var(--Primary-Accent) ;
+  width: 99vw ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+}
+
+
+.UIAFooter {
+  position: fixed ;
+  bottom: 0 ;
+  left: 0 ;
+  padding: .5rem ;
+  margin-top: auto ;
+  display: flex ;
+  justify-content: space-around ;
+  align-items: center ; 
+  height: 8rem ;
+  width: 99vw ;
+  background: var(--Main-Background)  ;
+  z-index: 99999 ;
+}
+
+.UIAForm {
+  display: grid ;
+  justify-content: center ;
+  align-items: center ;
+  gap: 2rem ;
+}
+
+.UIAInp {
+  height: 3rem ;
+  width: 30rem ;
+  padding: 1rem ;
+
+  background: var(--input-bg) ;
+  border: .2rem solid #1F2937 ;
+  color: var(--Text-Primary) ;
+  border-radius: 1rem ;
+  padding: 1rem 1.4rem ;
+}
+
+.UIABtn {
+  height: 5rem ;
+  padding: 1rem ;
+  background: var(--Primary-Accent) ;
+  color: #fff ; // var(--Text-Primary);
+  border-radius: 1rem ;
+  padding: 1rem 1.6rem ;
+  border: none ;
+  font-weight: 500 ;
+}
+
+.dobCon {
+  margin: .5rem ;
+  padding: 1rem ;
+  display: flex ;
+  justify-content: space-between ;
+  align-items: center ; 
+  font-size: 1.6rem ;
+  border: 1px solid var(--Text-Primary);
+  border-radius: 2rem ;
+  backdrop-filter: blur(1rem) ;
+  background: var(var(--Surface-Active));
+  
+}
+
+#dobinp {
+  background: transparent ;
+  color: var(--Text-Primary);
+  padding: 1rem ;
+  border-radius: 1rem ;
+  
+}
+
+
+.mail-inp-con {
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+}
+
+.sm-inp-leyar {
+  position: absolute ;
+  right: 6rem ;
+  background: transparent ;
+  font-size: 2rem ;
+}
+
+.UIAW {
+  color: #EB0202 ;
+}
+
+.UIBRbtn {
+  margin: .5rem ;
+  padding: 1rem ;
+  display: flex ;
+  //justify-content: center ;
+  align-items: center ; 
+  font-size: 1.6rem ;
+  border: 1px solid var(--Text-Primary);
+  border-radius: 2rem ;
+  backdrop-filter: blur(1rem) ;
+  background: var(--Surface-Active) ; // #42445AB0 ;
+  
+}
+
+.UIBRbtn input {
+  margin: 1rem ;
+}
+
+.UIBCon {
+  display: flex ;
+  justify-content: space-between ;
+  //align-items: center ; 
+}
+
+
+
+.UIBRbtnC {
+  display: grid ;
+  //justify-content: space-between ;
+  //align-items: center ; 
+  
+}
+
+.MHPRMail {
+  height: 6rem ;
+  width: 30rem ;
+  //border: .2rem solid #B9FFB0 ;
+  border-radius: 5rem ;
+  background: var(--input-bg) ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+}
+
+.MHPRMail input {
+  background-color: transparent ;
+  border: none ;
+  padding: 1rem ;
+  
+}
+
+// GLOBAL CLASS
+.animated-border {
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+  position: relative;
+  border-radius: 5rem ;
+  overflow: hidden;
+  --border-speed: 3s;
+  --border-count: 1 ; // default 
+}
+
+.animated-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    #00f,
+    #0ff,
+    #00f,
+    transparent
+  );
+
+  //animation: rotateBorder 30s linear infinite;
+  
+  animation: rotateBorder var(--border-speed) linear var(--border-count) ;
+}
+
+.animated-border::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: inherit ; // auto match background 
+  border-radius: inherit;
+}
+
+@keyframes rotateBorder {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.writeMail {
+  height: 5rem ;
+  width: 5rem ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+}
+
+.unreadMsgsPage {
+  
+}
+.profileIcon {
+  background: var(--Main-Background) ;
+  height: 5rem ;
+  width: 5rem ;
+  border-radius: 50% ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+  z-index: 1 ;
+}
+
+.profileIcon .inner {
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 2;
+}
+
+button {
+  border: none ;
+}
+
+/* image */
+#profileImg {
+  width: 95% ;
+  height: 95% ;
+  object-fit: cover ;
+}
+
+
+.content {
+  position: relative ;
+  inset: 2px; /* border thickness */
+  background: var(--input-bg) ;
+  border-radius: inherit;
+
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  z-index: 2;
+}
+
+/* input */
+.content input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--Text-Primary);
+}
+
+.louder {
+  height: 6rem ;
+  width: 6rem ;
+  border-radius: 50% ;
+  background: var(--input-bg) ;
+  
+}
+
+.searchIcon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--Text-Primary);
+}
+
+.tpbtn {
+  background: transparent ;
+  border: none ;
+  
+}
+
+.woringCon {
+  display: flex ;
+  justify-content: space-between ;
+  align-items: center ; 
+}
+
+.woring {
+  margin: .4rem ;
+  color: red ;
+  font-size: .5rem ;
+}
+
+.logo-con {
+  display: grid;
+  grid: 1/1 ;
+  gap: 3rem ;
+  position: absolute ;
+  top: 6rem ;
+}
+.img-con {
+  margin-left: 4rem ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+  height: 8rem ;
+  width: 8rem ;
+  border: .1rem solid var(--Text-Primary);
+  
+  border-radius: 50% ;
+  
+}
+
+.text-link {
+  color: var(--Primary-Accent) ;
+  font-size: 1.2rem ;
+}
+
+.TCp {
+  margin-left: 3rem ;
+}
+
+.TCbtn {
+  padding: 1.5rem ;
+  background: var(--Primary-Accent) ;
+  color: var(--Text-Primary);
+  border: none ;
+  border-radius: 1rem ;
+}
+
+.writeMail {
+  padding: .2rem ;
+  border-radius: 50% ;
+  background: var(--input-bg) ;
+}
+
+.resever-smail {
+  height: 2 ;
+  padding: 1.4rem 2rem ;
+  //background: var(--input-bg) ;
+  background: transparent ;
+
+  border-radius: 1rem ;
+  border: none ;
+}
+
+#sub {
+  margin: 1rem ;
+  font-size: 2rem ;
+  background: transparent ;
+}
+
+.dg {
+  display: grid ;
+  gap: 5rem ;
+}
+
+#compose {
+  padding: 3rem ;
+  //background: var(--input-bg) ;
+  background: transparent ;
+  border: none ;
+  border-radius: 4rem ;
+  font-size: 1.5rem ;
+}
+
+.sentBtn {
+  padding: 1.5rem ;
+  border: none ;
+  border-radius: 50% ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+  background: var(--Primary-Accent) ;
+  color: #fff ;
+}
+
+
+button::active {
+  transform: translateX(.2rem)  ;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px); /* Paiki nundi smooth ga kindhaki vasthundi */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*
+
+.MHPMenu {
+  margin: .2rem ;
+  height: 60vh ;
+  width: 99vw ;
+  position: fixed ;
+  top: 0 ;
+  left: 0 ;
+  padding: 1rem ;
+  background: var(--input-bg) ;
+  border-radius: 1rem ;
+  opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    transition: all 0.4s ease-in-out;
+  //animation: slideIn .6s linear forwards ;
+  z-index: 111 ;
+}
+
+.MHPMenu.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto; 
+}
+
+*/
+
+
+.MHPMenu {
+    margin: .2rem;
+    height: 60vh;
+    width: 99vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 1rem;
+    background: var(--input-bg);
+    border-radius: 1rem;
+    z-index: 111;
+    
+    /* Animation Basics */
+    opacity: 0;
+    transform: translateY(-20px);
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Menu Show ayyetappudu */
+.MHPMenu.active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Optional: Menu vellipoyetappudu inkoncham clean ga undalante */
+.MHPMenu.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+
+
+.WMPDots {
+  margin: .2rem ;
+  height: auto ;
+  position: fixed ;
+  top: 0 ;
+  right: 0 ;
+  padding: 1rem ;
+  background: var(--input-bg) ;
+  border-radius: 1rem ;
+  z-index: 111 ;
+}
+
+.WMPDotsP {
+  padding: 1rem ;
+  font-size: 2rem ;
+  
+}
+
+.MHedding {
+  display: flex ;
+  justify-content: space-between ;
+  align-items: center ; 
+  width: 85vw ;
+  height: 10vh ;
+}
+
+.MOptions {
+  margin-left: 2rem ;
+  display: flex ;
+  justify-content: space-between ;
+  //align-items: center ; 
+  width: 85vw ;
+  height: auto ;
+}
+
+.MBOne {
+  margin-top: 2rem ;
+  padding: 2rem ;
+  display: grid ;
+  height: 30vh ;
+  width: 30vw ;
+  //border: .1rem solid var(--Text-Primary) ;
+}
+
+.settings {
+  margin-top: 2rem ;
+  padding: 2rem ;
+  padding-left: 12rem ;
+  display: grid ;
+  height: 30vh ;
+  width: 30vw ;
+  //border: .1rem solid var(--Text-Primary) ;
+}
+
+
+.settingsBtn {
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+}
+
+.suggestions-list {
+  position: absolute;
+  bottom: 60px; /* Footer పైన రావడానికి */
+  left: 10px;
+  right: 10px;
+  background: var(--input-bg) ;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+  z-index: 100;
+}
+
+/* Suggestions Container */
+.suggestions-list {
+  position: absolute;
+  bottom: 80px; /* Input box కి పైన రావడానికి */
+  left: 5%;
+  width: 90%;
+  background-color: var(--input-bg) ;
+  color: var(--Text-Primary);
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid var(--Text-Secondary);
+  animation: slideUp 0.2s ease-out; /* చిన్న యానిమేషన్ */
+}
+
+/* ఒక్కో Suggestion Item */
+.suggestion-item {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--Text-Primary);
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background-color: var(--Surface-Active);
+}
+
+.suggestion-label {
+  color: var(--Text-Secondary);
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* సన్నని స్క్రోల్‌బార్ కోసం */
+.suggestions-list::-webkit-scrollbar {
+  width: 4px;
+}
+.suggestions-list::-webkit-scrollbar-thumb {
+  background: var(--Text-Secondary);
+  border-radius: 10px;
+}
+
+/* suggestions-list లోపల లోడింగ్ సెంటర్ లో ఉండటానికి */
+.suggestions-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px; /* లోడింగ్ తిరుగుతున్నప్పుడు బాక్స్ ఖాళీగా లేకుండా */
+}
+
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.spinner {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  /* నువ్వు అడిగిన వీడియోలో ఉన్న కలర్ గ్రేడియంట్ */
+  background: conic-gradient(
+    from 0deg,
+    transparent 10%,
+    #00f 30%,    /* Blue */
+    #0ff 60%,    /* Cyan */
+    #f0f 90%,    /* Magenta/Purple touch */
+    transparent 100%
+  );
+  animation: rotate 0.8s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* వీడియోలో ఉన్నట్లు గ్లో ఎఫెక్ట్ కోసం */
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+/* మధ్యలో హోల్ (Hole) కోసం */
+.spinner::before {
+  content: "";
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  background: var(--Main-Background) ; /* ఒకవేళ నీ బ్యాక్‌గ్రౌండ్ బ్లాక్ అయితే ఇది పర్ఫెక్ట్ గా సెట్ అవుతుంది */
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* ఆ వీడియోలో ఉన్నట్లు చుట్టూ బ్లర్ గ్లో రావడం కోసం */
+.spinner::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: inherit; /* మెయిన్ గ్రేడియంట్ నే తీసుకుంటుంది */
+  filter: blur(10px);  /* ఇది ఆ నియాన్ గ్లో ని ఇస్తుంది */
+  z-index: 1;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* లోడింగ్ స్క్రీన్ ఓవర్లే (Dark Theme) */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--Surface-Active) ; /* వీడియోలో ఉన్నట్లు డార్క్ బ్యాక్ గ్రౌండ్ */
+  backdrop-filter: blur(.5rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.EmailListContainer {
+  position: sticky ;
+  top: 10rem ;
+  display: grid ;
+}
+
+.EmailList {
+  //width: 80vw ;
+  padding: 1rem ;
+}
+
+.MailItem {
+  height: 6.6rem ;
+  //position: sticky ;
+  //top: 8rem ;
+  font-size: 1.6rem ;
+  width: 90vw ;
+  background: var(--input-bg) ;
+  padding: 1.5rem ;
+  border-radius: 1.2rem ;
+  margin-bottom: 1rem ;
+  box-shadow: 0 .2rem .5rem rgba(0,0,0,0.05);
+  display: flex;
+  //flex-direction: column;
+  justify-content: space-between ;
+  align-items: center ;
+  cursor: pointer;
+  //border-left: .4rem solid var(--Primary-Accent) ; /* కొత్త మెయిల్ లా కనిపించడానికి */
+  //border-right: .4rem solid var(--Primary-Accent) ;
+}
+
+.Sender {
+  font-weight: bold;
+  font-size: 1.5rem ;
+  color: var(--Text-Primary);
+}
+
+.Subject {
+  font-size: 1.4rem ;
+  color: var(--Text-Primary);
+  margin-top: .4rem ;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.MailTime {
+  
+  
+  font-size: .8rem ;
+}
+
+.MCon {
+  overflow-x: hidden ;
+  overflow-y: auto ;
+  position: fixed ;
+  top: 8rem ;
+  height: 80vh ;
+  width: 99vw ;
+  // border: 1px solid var(--Primary-Accent) ;
+  z-index: 10 ;
+  
+}
+
+.con-M {
+  height: auto ;
+  display: grid ;
+  justify-content: center ;
+  align-items: center ;
+  margin-top: 1rem ;
+  margin-bottom: 1rem ;
+}
+
+
+.mail-prof {
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+  height: 5rem ;
+  width: 5rem ;
+  border-radius: 50% ;
+  border: 1px solid var(--Primary-Accent) ;
+  
+}
+
+.con-cun {
+  position: absolute ;
+  
+  left: 12rem ;
+}
+
+.savedAtime {
+  position: absolute ;
+  right: 1rem ;
+  display: grid ;
+  gap: 3rem ;
+}
+
+.dullText {
+  width: 56vw ;
+  color: var(--Text-Secondary) ;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.MailSender {
+  width: 56vw ;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.MailSubject {
+  width: 56vw ;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.eyeicons {
+  position: absolute ;
+  top: 1.5rem ;
+  right: 2rem ;
+  z-index: 99 ;
+}
+
+.pass-con {
+  position: relative ;
+}
+
+.mail-content {
+  height: auto ;
+  overflow-x: hidden ;
+  overflow-y: auto ;
+}
+
+.mail-body-con {
+  position: relative ;
+  min-height: 78vh ;
+  width: 96vw ;
+  background: var(--Surface-Active) ;
+  //border: .2rem solid var(--Text-Primary) ;
+  display: grid ;
+  border-radius: 1rem ;
+}
+
+.OYMSubject {
+  position: absolute ;
+  top: 0 ;
+  height: 12.0% ;
+  width: 100% ;
+  //border: .1rem solid var(--Text-Primary) ;
+  display: flex ;
+  justify-content: space-around ;
+  align-items: center ; 
+}
+
+.OYMReplay {
+  height: 8.0% ;
+  padding: .5rem ;
+  width: 100% ;
+  //border: .1rem solid var(--Text-Primary) ;
+  display: flex ;
+  justify-content: center; 
+  align-items: center ; 
+  position: absolute ;
+  bottom: 0 ;
+}
+
+.OYMBody-Up-Con {
+  position: absolute ;
+  top: 6rem ;
+  height: 80% ;
+  width: 99% ;
+  padding: 1rem ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+  overflow-x: hidden ;
+  overflow-y: auto ;
+}
+
+.OYMBody-Con {
+  position: absolute ;
+  top: 5rem ;
+  height: auto ;
+  width: 85% ;
+  font-size: 1.6rem ;
+  padding: 2rem ;
+}
+
+.body-text {
+  font-size: 3rem ;
+}
+
+.OYMSend {
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+  height: 5rem ;
+  width: 5rem ;
+  font-size: 1rem ;
+  border-radius: 50% ;
+  background: var(--Main-Background) ;
+  color: #fff ;
+}
+
+.OYMInp {
+  height: 2.5rem ;
+  width: 25rem ;
+  padding: 1rem ;
+
+  background: var(--input-bg) ;
+  border: .2rem solid #1F2937 ;
+  color: var(--Text-Secondary) ;
+  border-radius: 1rem ;
+  padding: 1rem 1.4rem ;
+}
+
+.SMFPage {
+ 
+  position: relative ;
+  top: 10rem ;
+  height: auto ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+}
+
+.sentMailCon {
+  position: absolute ;
+  display: grid ;
+  height: 70vh ;
+  width: 98vw ;
+  overflow-x: hidden ;
+  overflow-y: auto ;
+}
+
+.replayOrFarword {
+  padding: 1.2rem ;
+  width: 45% ;
+  border: none ;
+  border-radius: 2rem ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+  background: var(--Primary-Accent) ;
+  color: #fff ;
+}
+
+.FMail {
+  position: sticky ;
+  
+  font-size: 3rem ;
+  color: #FAFF00 ;
+  z-index: 99999 ;
+}
+
+
+.rotateBtn::active {
+  transform: rotate(90deg) ;
+}
+
+
+/* డ్రాప్‌డౌన్ మెనూ స్టైలింగ్ */
+.label-dropdown {
+    position: absolute;
+    top: 4rem ;
+    right: 0 ;
+    background-color: #2c2c2c; /* డార్క్ థీమ్ కి సెట్ అవుతుంది */
+    border: 1px solid #444;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5) ;
+    z-index: 99999999999999 ;
+    min-width: 160px;
+    padding: 8px 0;
+}
+
+.label-dropdown p {
+    color: var(--Text-Secondary) ;
+    font-size: 11px;
+    padding: 4px 12px;
+    margin: 0;
+    text-transform: uppercase;
+    border-bottom: var(--Text-Secondary) ;
+    
+}
+
+.label-item {
+    color: var(--Text-Primary) ;
+    padding: 10px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.4s ;
+    
+}
+/*
+.label-item:hover {
+    background-color: #444 ;
+}
+*/
+/* ఐకాన్ ఉన్న కంటైనర్ కి ఇది ఉండాలి */
+.bookmark-con {
+    position: relative;
+    display: inline-block;
+    
+}
+
+.saved {
+  z-index: 999 ;
+}
+
+
+
+.bookmark-con {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.label-dropdown {
+    position: absolute;
+    /* top: 4rem; badulu positive value tho check chey */
+    top: 100%; /* Bookmark icon ki justify ga kinda start avvali */
+    right: 0;
+    background-color: #2c2c2c; 
+    z-index: 9999; /* Higher than .MailItem */
+    min-width: 140px;
+    /* Inka kanipించకపోతే shadow add chesi check chey */
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.4); 
+}
+
+/* Ee values ni update chey */
+.label-dropdown {
+    position: fixed; /* absolute badulu fixed pettu */
+    /* top and right values ni adjust chey manual ga */
+    top: auto; 
+    right: 20px; 
+    /* specific ga dropdown height and appearance fix cheyyi */
+    z-index: 999999; 
+}
+
+
+.label-con {
+  position: fixed ;
+  left: 2rem ;
+  width: 90vw ;
+  overflow-x: auto ;
+  overflow-y: hidden ;
+  margin-bottom: 1rem ;
+}
+
+
+
+.LabelTabsContainer {
+  
+  display: flex ;
+  justify-content: space-evenly ;
+  align-items: center ; 
+  width: auto ;
+}
+
+.labelBtns {
+  white-space: nowrap ;
+  padding: 1rem  2.5rem ;
+  border: .1rem solid var(--Text-Secondary) ;
+  border-radius: 2rem ;
+  margin-left: 1rem ;
+  
+}
+
+.labelBtns::active {
+  background: var(--Primary-Accent) ;
+}
+
+.labelBtns::hover {
+  background: var(--Primary-Accent) ;
+}
+
+
+.labelInp {
+  padding: 1.5rem ;
+  background: var(--Surface-Active) ;
+  color: var(--Text-Primary) ;
+  border: none ;
+  border-radius: 2rem ;
+  margin-left: 1rem ;
+}
+
+.label-create-box {
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+  font-size: 2rem ;
+}
+
+
+/* Container styling */
+.ScheduledMails.App {
+    background-color: var(--Main-Background) ; /* నీ మెయిన్ బ్యాక్ గ్రౌండ్ కలర్ */
+    min-height: 100vh;
+}
+
+/* Header Adjustments */
+.UIAHeader h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.05rem ;
+}
+
+/* Content Area */
+//.UIAContent {
+//    padding: 20px;
+//}
+
+/* Neo-Minimalist Card Style */
+.scheduled-card {
+  max-width: 90vw ;
+    background: var(--Surface-Active) ; /* కార్డ్ కలర్ */
+    border: 1px solid rgba(0, 0, 0, 0.05); /* చాలా లైట్ బోర్డర్ */
+    border-radius: 2rem ; /* సాఫ్ట్ రౌండెడ్ కార్నర్స్ */
+    padding: 2rem;
+    margin-bottom: 1.6rem ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 .4rem 2rem rgba(0, 0, 0, 0.02); /* వెరీ సటిల్ షాడో */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scheduled-card:hover {
+    transform: translateY(-.2rem);
+    box-shadow: 0 .8rem 3rem rgba(0, 0, 0, 0.04);
+}
+
+/* Top Row (Recipient & Time) */
+.mail-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem ;
+    align-items: center;
+    margin-bottom: 1rem ;
+}
+
+.recipient-tag {
+    background: var(--Text-Secondary) ;
+    padding: .4rem 1.2rem ;
+    border-radius: 10rem ;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #4a5568 ;
+}
+
+.time-tag {
+    display: flex;
+    align-items: center;
+    gap: .4rem ;
+    font-size: 0.75rem;
+    color: #a0aec0;
+    font-weight: 500;
+}
+
+/* Subject & Body Preview */
+.mail-sub {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 .6rem 0;
+    color: var(--Text-Primary, #1a202c);
+}
+
+.mail-body-preview {
+    font-size: 0.85rem;
+    color: var(--Text-Secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 2 లైన్ల తర్వాత ... వస్తుంది */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+}
+
+/* Delete Button Styling */
+.delete-schedule-btn {
+    background: var(--Primary-Accent) ; /* లైట్ రెడ్ బ్యాక్ గ్రౌండ్ */
+    color: #f56565 ;
+    border: none;
+    width: 4.5rem ;
+    height: 4.5rem ;
+    border-radius: 1.4rem ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.delete-schedule-btn:hover {
+    background: #f56565;
+    color: var(--Text-Primary) ; 
+    transform: scale(1.05);
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    color: #a0aec0 ;
+    text-align: center;
+}
+
+.empty-state p {
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+
+/* Container & Layout */
+.EditProfile.App {
+    background-color: var(--Main-Background) ;
+    min-height: 100vh ;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-form-container {
+    max-width: 50rem ;
+    margin: 0 auto;
+    padding: 1rem ;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem ;
+}
+
+/* Row for Name/Surname or Gender/Usage */
+.input-group-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem ;
+}
+
+/* Neo-Minimalist Input Box */
+.neo-input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8rem ;
+    background: var(--Surface-Active) ;
+    padding: 1.2rem 1.6rem ;
+    border-radius: 1.8rem ;
+    border: .1rem solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 .4rem 1.5rem rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+}
+
+.neo-input-box:focus-within {
+    border-color: var(--Primary-Accent, #4a90e2);
+    box-shadow: 0 .8rem 2.5rem rgba(74, 144, 226, 0.08);
+    transform: translateY(-.2rem);
+}
+
+.neo-input-box label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--Text-Secondary) ;
+    display: flex;
+    align-items: center;
+    gap: .6rem ;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem ;
+}
+
+.neo-input-box input, 
+.neo-input-box select {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1.4rem ;
+    font-weight: 500;
+    color: var(--Text-Primary) ;
+    width: 100%;
+}
+
+/* Highlighted Section for Password */
+.neo-input-box.highlight {
+    background: var(--Surface-Active) ; /* Very light red to indicate importance */
+    border: .1rem dashed var(--Primary-Accent) ;
+}
+
+.neo-input-box small {
+    font-size: 1rem;
+    color: #e53e3e;
+    margin-top: .4rem ;
+}
+
+/* Full Width Fields */
+.full-width {
+    grid-column: span 2;
+}
+
+/* Update Button */
+.master-update-btn {
+    margin-top: 2rem ;
+    background: var(--Primary-Accent, #2d3748);
+    color: white ;
+    border: none;
+    padding: 1.6rem ;
+    border-radius: 1.8rem ;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.master-update-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+/* Custom styling for date and select */
+input[type="date"] {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a0aec0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0px center;
+}
+
+/* Scrollable area for long forms on mobile */
+.scrollable {
+  position: absolute ;
+  top: 10rem ;
+    overflow-y: auto;
+    flex: 1;
+    padding-bottom: 4rem ;
+}
+
+/* Verification Overlay */
+.VerifyOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--Surface-Active) ;
+    backdrop-filter: blur(1rem); /* సాఫ్ట్ గ్లాస్ ఎఫెక్ట్ */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.NeoModal {
+    background: var(--Main-Background) ;
+    width: 90%;
+    max-width: 35rem ;
+    padding: 30px;
+    border-radius: 3rem;
+    box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: .1rem solid rgba(0, 0, 0, 0.05);
+}
+
+.ModalIcon {
+    margin-bottom: 1.5rem ;
+    background: var(--Surface-Active) ;
+    width: 7rem ;
+    height: 7rem ;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem auto;
+}
+
+.NeoModal h2 {
+    font-size: 1.4rem ;
+    margin-bottom: 1rem ;
+    font-weight: 800;
+}
+
+.NeoModal p {
+    color: var(--Text-Secondary) ;
+    font-size: 0.9rem;
+    margin-bottom: 2.5rem ;
+    line-height: 1.4;
+}
+
+.ModalActions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem ;
+    margin-top: 2.5rem ;
+}
+
+.pri-btn, .sec-btn {
+    padding: 1.4rem ;
+    border-radius: 1.5rem ;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.pri-btn {
+    background: #2d3748;
+    color: white ;
+}
+
+.sec-btn {
+    background: #edf2f7;
+    color: #4a5568;
+}
+
+.pri-btn:active, .sec-btn:active {
+    transform: scale(0.95);
+}
+
+.pro-content {
+    margin-bottom: 2rem ;
+  display: grid ; 
+  gap: 5rem ;
+  min-height: 90vh ;
+}
+
+
+.optCard {
+  padding: 2rem ;
+  margin-bottom: 2rem ;
+  min-width: 88vw ;
+  max-width: 90vw ;
+  border-radius: 1rem ;
+  display: flex ;
+  justify-content: space-between ;
+  align-items: center ; 
+  background: var(--Surface-Active) ;
+}
+
+.profileImg {
+  width: 12rem ;
+  height: 12rem ;
+  border-radius: 50% ;
+  background: var(--Surface-Active) ;
+  font-size: 4rem ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+  z-index: 2 ;
+}
+
+
+
+.pro-con {
+  position: fixed ;
+  top: 10rem ;
+  left: 35% ;
+  gap: 2rem ;
+  display: grid ;
+  padding: 1rem ;
+}
+
+.mail-form {
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+}
+
+.singout {
+  padding: 1rem ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ; 
+  
+}
+
+// Help & Feedback Style 
+
+:root {
+   
+    /* Soft Elevation for Neo-Minimalism */
+    --neo-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.03);
+    --neo-shadow-active: 0 1.5rem 4rem rgba(0, 0, 0, 0.06);
+}
+
+.HelpPage.App {
+    background-color: var(--Main-Background);
+}
+
+.help-container {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+}
+
+/* Section Titles */
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding-left: .5rem;
+}
+
+.section-title h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--Text-Primary);
+    letter-spacing: -.03rem;
+}
+
+/* FAQ List - No Borders, Only Soft Cards */
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.faq-card {
+    background: var(--Main-Background);
+    border-radius: 2rem;
+    padding: 2rem;
+    /* Border తీసేసి చాలా లైట్ షాడో ఇచ్చాను */
+    box-shadow: var(--neo-shadow);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+}
+
+.faq-card.active {
+    background: var(--Main-Background);
+    box-shadow: var(--neo-shadow-active);
+    transform: translateY(-.2rem);
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: var(--Text-Primary);
+    font-size: 1.4rem;
+}
+
+.faq-card .arrow {
+    color: var(--Text-Secondary);
+    transition: transform 0.3s ease;
+}
+
+.faq-answer {
+    margin-top: 1.5rem;
+    font-size: 1.3rem;
+    color: var(--Text-Secondary);
+    line-height: 1.6;
+    padding-right: 1rem;
+}
+
+/* Feedback Area - Sunken Look */
+.feedback-box {
+    background: var(--input-bg);
+    border-radius: 2.4rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.feedback-box textarea {
+    width: 100%;
+    min-height: 14rem;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 1.4rem;
+    color: var(--Text-Primary);
+    resize: none;
+}
+
+.neo-send-btn {
+    background: var(--Primary-Accent);
+    color: #FFFFFF;
+    border: none;
+    padding: 1.4rem;
+    border-radius: 1.6rem;
+    font-weight: 700;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.neo-send-btn:active {
+    transform: scale(0.97);
+    filter: brightness(1.1);
+}
+
+/* Contact Info - Minimalist Row */
+.contact-card {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    padding: 2.2rem;
+    background: var(--Surface-Active);
+    border-radius: 2.2rem;
+}
+
+.contact-card h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: .2rem;
+    color: var(--Text-Primary);
+}
+
+.contact-card p {
+    font-size: 1.2rem;
+    color: var(--Primary-Accent);
+    font-weight: 500;
+}
+
+/* Utility to remove default hr style */
+.neo-divider {
+    border: none;
+    height: .1rem;
+    background: rgba(0, 0, 0, 0.03);
+    margin: .5rem 0;
+}
+
+// Group Mails Style 
+
+
+
+
+.GroupsPage.App { background: var(--Main-Background); }
+
+.help-container, .groups-list {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.neo-card {
+    background: var(--Main-Background);
+    border-radius: 2.4rem;
+    padding: 2rem;
+    box-shadow: var(--neo-shadow);
+    border: .1rem solid rgba(0,0,0,0.02);
+}
+
+.group-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    cursor: pointer;
+}
+
+.group-icon {
+    width: 4.8rem;
+    height: 4.8rem;
+    background: var(--Surface-Active);
+    border-radius: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--Primary-Accent);
+}
+
+.group-details h4 {
+    font-size: 1.5rem;
+    color: var(--Text-Primary);
+    margin-bottom: .2rem;
+}
+
+.group-details p {
+    font-size: 1.2rem;
+    color: var(--Text-Secondary);
+}
+
+/* Create Group Wrapper */
+.group-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: var(--input-bg);
+    border-radius: 1.2rem;
+    padding: 0 1.5rem;
+}
+
+.group-input-wrapper input {
+    background: transparent;
+    border: none;
+    padding: 1.2rem 0;
+    flex: 1;
+    font-size: 1.4rem;
+    outline: none;
+}
+
+.group-input-wrapper span {
+    font-size: 1.2rem;
+    color: var(--Text-Secondary);
+    font-weight: 600;
+}
+
+/* Members Display */
+.members-mini-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin-top: 1.5rem;
+}
+
+.member-tag {
+    background: var(--Surface-Active);
+    padding: .6rem 1.2rem;
+    border-radius: 10rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--Text-Secondary);
+}
+
+.del-btn {
+    width: 100%;
+    margin-top: 2rem;
+    background: #fff5f5;
+    color: #ff4d4d;
+    border: none;
+    padding: 1.2rem;
+    border-radius: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .8rem;
+}
+
+.pri-btn {
+    background: var(--Primary-Accent);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    border: none;
+    font-weight: 600;
+}
+
+.create-box {
+    margin: 2rem;
+    padding: 2rem;
+}
+
+.create-box h3 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+}
+
+.group-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.domain-hint {
+    font-size: 1.1rem;
+    opacity: 0.6;
+}
+
+.btn-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-row button {
+    flex: 1;
+}
+
+.groups-list {
+    padding: 2rem;
+}
+
+.empty-state {
+    text-align: center;
+    opacity: 0.5;
+    margin-top: 4rem;
+}
+
+.group-item {
+    margin-bottom: 1.5rem;
+    padding: 2rem;
+}
+
+.group-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    cursor: pointer;
+}
+
+.group-icon {
+    width: 4.5rem;
+    height: 4.5rem;
+    background: var(--Surface-Active);
+    border-radius: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--Primary-Accent);
+}
+
+.group-details h4 {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.group-details p {
+    font-size: 1.1rem;
+    opacity: 0.6;
+}
+
+.group-manage {
+    margin-top: 2rem;
+    border-top: 0.1rem solid var(--Surface-Active);
+    padding-top: 1.5rem;
+}
+
+.member-add-box {
+    display: flex;
+    background: var(--Surface-Active);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.member-add-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 0.8rem;
+    outline: none;
+    font-size: 1.3rem;
+    color: inherit;
+}
+
+.member-add-box button {
+    background: none;
+    border: none;
+    color: var(--Primary-Accent);
+    cursor: pointer;
+}
+
+.members-mini-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.member-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--Surface-Active);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.member-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.2rem;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.delete-group-btn {
+    width: 100%;
+    margin-top: 2rem;
+    padding: 1.2rem;
+    border-radius: 1rem;
+    border: none;
+    color: #ff4d4d;
+    background: rgba(255, 77, 77, 0.1);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.delete-group-btn:active {
+    opacity: 0.7;
+}
+
+.con-G {
+    display: grid ;
+}
+
+:root {
+  /* SIZE & STYLE CONTROL */
+  --loader-size: 70px;
+  --stroke-thickness: 8px;
+  --anim-speed: 2.5s;
+  
+  /* COLORS */
+  --color-1: #0000ff; /* Blue */
+  --color-2: #00ffff; /* Cyan */
+  --color-3: #ff00ff; /* Magenta */
+}
+
+.loader-container {
+  width: var(--loader-size);
+  height: var(--loader-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Circle: Left -> Bottom -> Right -> Top -> Close */
+.circle-path {
+  fill: none;
+  stroke: url(#vibrant-gradient);
+  stroke-width: var(--stroke-thickness);
+  stroke-linecap: round;
+  transform-origin: center;
+  transform: rotate(180deg) scaleY(-1);
+  stroke-dasharray: 251.2;
+  stroke-dashoffset: 251.2;
+  animation: circle-logic var(--anim-speed) infinite linear;
+}
+
+/* Wave: Fits inside the circle */
+.wave-path {
+  fill: none;
+  stroke: url(#vibrant-gradient);
+  stroke-width: var(--stroke-thickness);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  stroke-dasharray: 120; 
+  stroke-dashoffset: 120;
+  animation: wave-snake-logic var(--anim-speed) infinite linear;
+}
+
+@keyframes circle-logic {
+  0% { stroke-dashoffset: 251.2; opacity: 1; }
+  40% { stroke-dashoffset: 0; opacity: 1; }
+  41%, 100% { opacity: 0; }
+}
+
+@keyframes wave-snake-logic {
+  0%, 41% {
+    opacity: 0;
+    stroke-dashoffset: 120;
+  }
+  42% {
+    opacity: 1;
+    stroke-dashoffset: 120;
+  }
+  68% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+  90%, 100% {
+    opacity: 0;
+  }
+}
+/*
+.loader-con {
+    display: flex ;
+    justify-content: center ;
+    align-items: center ; 
+    background: #000 ;
+    backdrop-filter: blur{5rem} ;
+    min-height: 80vh ;
+    min-width: 95vw ;
+    z-index: 999999 ;
+}
+*/
+
+.loader-con {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8); /* Pure black badulu koncham transparency unte backdrop blur baga kanipisthundi */
+    
+    /* Full Page Cover Logic */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    
+    /* Blur Effect */
+    backdrop-filter: blur(10px); /* 5rem chala ekkuva avtundi, 10px-20px smooth ga untundi */
+    -webkit-backdrop-filter: blur(10px); /* Safari support kosam */
+    
+    z-index: 999999;
+}
